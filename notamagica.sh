@@ -1,15 +1,30 @@
 #!/usr/bin/env bash
 set -o errexit; set -o errtrace; set -o pipefail # Exit on errors
-# Uncomment line below for debugging:
-#PS4=$'+ $(tput sgr0)$(tput setaf 4)DEBUG ${FUNCNAME[0]:+${FUNCNAME[0]}}$(tput bold)[$(tput setaf 6)${LINENO}$(tput setaf 4)]: $(tput sgr0)'; set -o xtrace
-__deps=( "sed" "xargs" "pdftotext" )
-for dep in ${__deps[@]}; do hash $dep >& /dev/null || (echo "$dep was not found. Please install poppler and try again." && exit 1); done
+
 
 Blue='\e[01;34m'
 White='\e[01;37m'
 Red='\e[01;31m'
 Green='\e[01;32m'
 Reset='\e[00m'
+
+
+if [[ ! $(command -v 'pdftotasdext') ]]; then
+    echo -e "${Red}ERROU: você vai ter que instalar o 'poppler' antes!${Reset}"
+    echo -en "É Ubuntu (ou Debian) essa máq aí? [sim/nao] "
+    read yn
+    case ${yn:0:1} in
+        s|S|y|Y )
+            echo 'sudo apt-get install poppler'
+            sudo apt-get install poppler
+        ;;
+        * )
+            echo -e "Q pena, mas então vc deve saber o que éstá fazendo.\nVolte aqui com o poppler e falamos de novo."
+            exit
+        ;;
+    esac
+fi
+
 
 function usage {
     echo -e "${Blue}Para usar, coloque: \n" \

@@ -9,7 +9,7 @@ Green='\e[01;32m'
 Reset='\e[00m'
 
 
-if [[ ! $(command -v 'pdftotasdext') ]]; then
+if [[ ! $(command -v 'pdftotext') ]]; then
     echo -e "${Red}ERROU: você vai ter que instalar o 'poppler' antes!${Reset}"
     echo -en "É Ubuntu (ou Debian) essa máq aí? [sim/nao] "
     read yn
